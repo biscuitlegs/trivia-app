@@ -5,20 +5,7 @@ const hasQuestion = (question) => ({ question })
 const hasCorrectAnswer = (correctAnswer) => ({ correctAnswer })
 const hasIncorrectAnswer = (incorrectAnswer) => ({ incorrectAnswer })
 const hasIncorrectAnswers = (incorrectAnswers) => ({ incorrectAnswers })
-const canCreateHTMLAnswers = (answers) => {
-    const createHTMLAnswers = () => {
-        const answerList = document.createElement('ul')
-        answers.forEach((answer) => {
-            const answerChoice = document.createElement('li')
-            answerChoice.textContent = answer.text
-            answerList.appendChild(answerChoice)
-        })
-
-        return answerList
-    }
-
-    return { createHTMLAnswers }
-}
+const hasAnswers = (answers) => ({ answers })
 
 const MultipleChoiceQuestion = (
     category,
@@ -34,7 +21,7 @@ const MultipleChoiceQuestion = (
     ...hasQuestion(question),
     ...hasCorrectAnswer(correctAnswer),
     ...hasIncorrectAnswers(incorrectAnswers),
-    ...canCreateHTMLAnswers([correctAnswer, ...incorrectAnswers]),
+    ...hasAnswers([correctAnswer, ...incorrectAnswers]),
 })
 
 const BooleanQuestion = (
@@ -51,7 +38,7 @@ const BooleanQuestion = (
     ...hasQuestion(question),
     ...hasCorrectAnswer(correctAnswer),
     ...hasIncorrectAnswer(incorrectAnswer),
-    ...canCreateHTMLAnswers([correctAnswer, incorrectAnswer]),
+    ...hasAnswers([correctAnswer, incorrectAnswer]),
 })
 
 export { MultipleChoiceQuestion, BooleanQuestion }

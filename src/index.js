@@ -1,22 +1,58 @@
 import he from 'he'
 import { MultipleChoiceQuestion, BooleanQuestion } from './question-types'
-import Answer from './answer'
+import {
+    Answer,
+    createHTMLAnswers,
+    initializeHTMLAnswerButtons,
+} from './answer'
+
+const shuffleArray = (array) => {
+    const shuffledArray = []
+    while (array.length > 0) {
+        const randomIndex = Math.floor(Math.random() * array.length)
+        shuffledArray.push(array[randomIndex])
+        array.splice(randomIndex, 1)
+    }
+
+    return shuffledArray
+}
+
+const createCategoryDisplay = (text) => {
+    const categoryDisplay = document.createElement('h2')
+    categoryDisplay.textContent = text
+
+    return categoryDisplay
+}
+
+const createDifficultyDisplay = (text) => {
+    const difficultyDisplay = document.createElement('h2')
+    difficultyDisplay.textContent = text
+
+    return difficultyDisplay
+}
+
+const createQuestionDisplay = (text) => {
+    const questionDisplay = document.createElement('h2')
+    questionDisplay.textContent = text
+
+    return questionDisplay
+}
 
 const QuestionDisplayer = (promise) => {
     const displayQuestions = () => {
         promise.then((objects) => {
             objects.forEach((object) => {
                 const { category, difficulty, question } = object
-                const categoryDisplay = document.createElement('h2')
-                categoryDisplay.textContent = category
+                const categoryDisplay = createCategoryDisplay(category)
                 document.body.appendChild(categoryDisplay)
-                const difficultyDisplay = document.createElement('h3')
-                difficultyDisplay.textContent = difficulty
+                const difficultyDisplay = createDifficultyDisplay(difficulty)
                 document.body.appendChild(difficultyDisplay)
-                const questionDisplay = document.createElement('h4')
-                questionDisplay.textContent = question
+                const questionDisplay = createQuestionDisplay(question)
                 document.body.appendChild(questionDisplay)
-                const answersDisplay = object.createHTMLAnswers()
+                const shuffledAnswers = shuffleArray(object.answers)
+                const answersDisplay = createHTMLAnswers(shuffledAnswers)
+                const answerButtons = answersDisplay.querySelectorAll('button')
+                initializeHTMLAnswerButtons(answerButtons)
                 document.body.appendChild(answersDisplay)
             })
         })
