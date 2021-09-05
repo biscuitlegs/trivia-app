@@ -9,4 +9,12 @@ const shuffleArray = (array) => {
     return shuffledArray
 }
 
-export default shuffleArray
+const capitalize = (string) => {
+    const firstLetter = string.charAt(0)
+    const stringArray = string.split('')
+    stringArray[0] = firstLetter.toUpperCase()
+
+    return stringArray.join('')
+}
+
+export { shuffleArray, capitalize }
