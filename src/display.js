@@ -1,6 +1,33 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as Helper from './helper'
 
+const createNav = () => {
+    const nav = document.createElement('nav')
+    const navLink = document.createElement('a')
+    const navIcon = document.createElement('i')
+    navIcon.classList.add('bi', 'bi-github', 'text-light', 'fs-3')
+    navLink.appendChild(navIcon)
+    navLink.classList.add('ms-4')
+    navLink.setAttribute('href', 'https://github.com/biscuitlegs/trivia-app')
+    nav.appendChild(navLink)
+
+    return nav
+}
+
+const createFooter = () => {
+    const footer = document.createElement('footer')
+    const footerSpan = document.createElement('span')
+    const footerLink = document.createElement('a')
+    footerSpan.textContent = 'Powered by the '
+    footerLink.textContent = 'Open Trivia Database'
+    footerLink.setAttribute('href', 'https://opentdb.com')
+    footer.appendChild(footerSpan)
+    footer.appendChild(footerLink)
+    footer.classList.add('text-light', 'text-center', 'mb-3')
+
+    return footer
+}
+
 const createHTMLAnswers = (answers) => {
     const answerList = document.createElement('ul')
     answerList.classList.add('list-unstyled')
@@ -93,9 +120,11 @@ const QuestionDisplayer = (promise) => {
                 document.body.appendChild(container)
             })
         })
+
+        return promise
     }
 
     return { displayQuestions }
 }
 
-export default QuestionDisplayer
+export { QuestionDisplayer, createFooter, createNav }
